@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "801869569373",
+    "project_id": "listnest-7c821",
+    "storage_bucket": "listnest-7c821.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:801869569373:android:5dc50b4d988dd293c99cb4",
+        "android_client_info": {
+          "package_name": "com.example.list_nest2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEweB9hCtGos4PAMbiCIlblaoptM5Fuiw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
