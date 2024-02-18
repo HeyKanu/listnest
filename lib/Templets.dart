@@ -184,7 +184,7 @@ class _Templets_pageState extends State<Templets_page> {
   }) {
     if (field == "Text") {
       return TextFormField(
-        autofocus: true,
+        // autofocus: true,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.only(left: 5),
           hintText: Hint_Text,
@@ -563,7 +563,7 @@ class _Templets_pageState extends State<Templets_page> {
                                   setState(() {});
                                 },
                                 autocorrect: true,
-                                autofocus: true,
+                                // autofocus: true,
                                 decoration: InputDecoration(
                                     prefixIcon: IconButton(
                                         onPressed: () {
@@ -702,8 +702,13 @@ class _Templets_pageState extends State<Templets_page> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: Text("Are you "),
+                          title: Text("Are you sure"),
                           actions: [
+                            ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("Cancel")),
                             ElevatedButton(
                                 onPressed: () {
                                   FirebaseAuth.instance.signOut();
@@ -711,7 +716,7 @@ class _Templets_pageState extends State<Templets_page> {
                                   setState(() {});
                                   Get.offAll(Login_Page());
                                 },
-                                child: Text("OK"))
+                                child: Text("OK")),
                           ],
                         );
                       });
@@ -1163,8 +1168,8 @@ class _Templets_pageState extends State<Templets_page> {
                                         hints: [
                                           "enter Program Name",
                                           "enter Docment Name",
-                                          "enter Partner Name"
-                                              "enter email",
+                                          "enter Partner Name",
+                                          "enter email",
                                           "enter Phone Nmber",
                                           "enter Goals ",
                                           "enter Date"
@@ -1477,7 +1482,7 @@ class _Templets_pageState extends State<Templets_page> {
 
                               minLines: 1,
                               maxLines: 1,
-                              autofocus: true,
+                              // autofocus: true,
                               autocorrect: true,
                               cursorColor: const Color.fromARGB(255, 0, 0, 0),
                               decoration: InputDecoration(

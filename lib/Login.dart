@@ -57,6 +57,12 @@ class _Login_PageState extends State<Login_Page> {
       EasyLoading.show();
       var finalResult =
           await FirebaseAuth.instance.signInWithCredential(credential);
+      //  await FirebaseAuth.instance
+      //                       .createUserWithEmailAndPassword(
+      //                 email: reslut.email,
+      //                 password: user_password,
+      //               );
+
       await FirebaseFirestore.instance.collection("users").doc(reslut.id).set({
         "name": reslut.displayName,
         "email": reslut.email,
