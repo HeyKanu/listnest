@@ -185,9 +185,24 @@ class _Data_showState extends State<Data_show> {
                 )
               : SizedBox(),
           actions: [
+            search
+                ? PopupMenuButton(
+                    icon: Icon(
+                      Icons.arrow_drop_down_circle_outlined,
+                      color: Colors.blueAccent,
+                    ),
+                    color: Color.fromARGB(255, 56, 56, 56),
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    itemBuilder: (context) {
+                      return MenuItems;
+                    },
+                  )
+                : SizedBox(),
             AnimatedContainer(
-                margin: EdgeInsets.all(5),
-                width: search ? 280 : 45,
+                margin: EdgeInsets.only(top: 5, bottom: 5),
+                width: search ? 260 : 45,
                 // height: 10,
                 decoration: BoxDecoration(
                     color: Color.fromARGB(255, 255, 255, 255),
@@ -237,321 +252,316 @@ class _Data_showState extends State<Data_show> {
                           color: const Color.fromARGB(172, 0, 0, 0),
                         ),
                       )),
-            search
-                ? PopupMenuButton(
-                    icon: Icon(
-                      Icons.arrow_drop_down_circle_outlined,
-                      color: Colors.blueAccent,
-                    ),
-                    color: Color.fromARGB(255, 56, 56, 56),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    itemBuilder: (context) {
-                      return MenuItems;
-                    },
-                  )
-                : Consumer<F_provider>(
-                    builder: (context, value, child) {
-                      return PopupMenuButton(
-                        icon: Icon(
-                          Icons.more_vert,
-                          color: Colors.white,
-                        ),
-                        color: Color.fromARGB(255, 56, 56, 56),
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        itemBuilder: (context) {
-                          return [
-                            PopupMenuItem(
-                                child: ListTile(
-                                  leading: Icon(
-                                    Icons.delete,
-                                    color: Color.fromARGB(132, 255, 255, 255),
-                                  ),
-                                  title: Text(
-                                    "Trash",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                                value: "Trash",
-                                onTap: () {
-                                  delete = true;
-                                  Filter = false;
-                                  setState(() {});
-                                }),
-                            PopupMenuItem(
-                              onTap: () {
-                                Filter = true;
-                                delete = false;
-                                Date_Fild.clear();
-                                Date_Fild.add("Submit Date");
-                                Value_Fild.clear();
-
-                                for (var i = 0; i < Date_Fild_ind.length; i++) {
-                                  Date_Fild.add(Lables[Date_Fild_ind[i]]);
-                                }
-                                for (var i = 0;
-                                    i < Value_Fild_ind.length;
-                                    i++) {
-                                  Value_Fild.add(Lables[Value_Fild_ind[i]]);
-                                }
-                                value.Update_Selected_Value_Date(Date_Fild[0]);
-
-                                print(Date_Fild);
-                                print("----------------------------++++++");
-                                print(Value_Fild);
-                                setState(() {});
-                              },
-                              child: ListTile(
-                                leading: Icon(
-                                  Icons.tune,
-                                  color: Color.fromARGB(148, 255, 255, 255),
-                                ),
-                                title: Text(
-                                  "Filter",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                              value: "Filter",
+            Consumer<F_provider>(
+              builder: (context, value, child) {
+                return PopupMenuButton(
+                  icon: Icon(
+                    Icons.more_vert,
+                    color: Colors.white,
+                  ),
+                  color: Color.fromARGB(255, 56, 56, 56),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  itemBuilder: (context) {
+                    return [
+                      PopupMenuItem(
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.delete,
+                              color: Color.fromARGB(132, 255, 255, 255),
                             ),
-                            PopupMenuItem(
-                              onTap: () async {
-                                Get.defaultDialog(
-                                  title: "Extract To Excel ",
-                                  // actions: [
-                                  //   Radio(
-
-                                  //     value: "excel",
-                                  //     groupValue: "formet",
-                                  //     onChanged: (value) {
-                                  //       extract_formet = value;
-                                  //     },
-                                  //   ),
-                                  //   Radio(
-                                  //     value: "pdf",
-                                  //     groupValue: "formet",
-                                  //     onChanged: (value) {
-                                  //       extract_formet = value;
-                                  //     },
-                                  //   )
-                                  // ],
-                                  content: Container(
-                                      height: 50,
-                                      width: 200,
-                                      child: TextFormField(
-                                        controller: file_con,
-                                        decoration: InputDecoration(
-                                            enabledBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                borderSide: BorderSide(
-                                                    color: Color.fromARGB(
-                                                        255, 0, 150, 250))),
-                                            disabledBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                borderSide: BorderSide(
-                                                    color: Color.fromARGB(
-                                                        255, 0, 150, 250))),
-                                            errorBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                borderSide: BorderSide(
-                                                    color:
-                                                        Color.fromARGB(255, 250, 0, 0))),
-                                            hintText: "enter file name to save",
-                                            focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Color.fromARGB(255, 0, 150, 250)))),
-                                      )),
-                                  cancel: InkWell(
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Container(
-                                      height: 50,
-                                      width: 100,
-                                      child: Center(child: Text("Cancel")),
-                                    ),
-                                  ),
-                                  confirm: InkWell(
-                                    onTap: () async {
-                                      print("valid");
-                                      Export_To_Excel obj = Export_To_Excel();
-                                      PermissionStatus storage_per =
-                                          await Permission.storage.request();
-                                      if (storage_per ==
-                                          PermissionStatus.granted) {
-                                        obj.export_to_Excel(
-                                            file_con.text, values, Lables);
-
-                                        // Get.snackbar(
-                                        //     "Error", "Samthing went wrong");
-                                      }
-                                      if (storage_per ==
-                                          PermissionStatus.denied) {
-                                        await Permission.storage.request();
-                                        // openAppSettings();
-                                        ScaffoldMessenger.of(context)
-                                          ..removeCurrentSnackBar()
-                                          ..showSnackBar(SnackBar(
-                                              content: Text(
-                                                  "This permission is recommended")));
-                                      }
-                                      if (storage_per ==
-                                          PermissionStatus.permanentlyDenied) {
-                                        // openAppSettings();
-                                        openAppSettings();
-                                      }
-                                      file_con.clear();
-                                      Navigator.pop(context);
-                                    },
-                                    child: Container(
-                                      width: 100,
-                                      height: 50,
-                                      child: Center(child: Text("Extract")),
-                                    ),
-                                  ),
-                                );
-                                // Export_To_Excel obj = Export_To_Excel();
-                                // PermissionStatus storage_per =
-                                //     await Permission.storage.request();
-                                // if (storage_per == PermissionStatus.granted) {
-
-                                //     obj.export_to_Excel(
-                                //         "my excel file", values, Lables);
-
-                                //     // Get.snackbar(
-                                //     //     "Error", "Samthing went wrong");
-
-                                // }
-                                // if (storage_per == PermissionStatus.denied) {
-                                //   await Permission.storage.request();
-                                //   // openAppSettings();
-                                //   ScaffoldMessenger.of(context).showSnackBar(
-                                //       SnackBar(
-                                //           content: Text(
-                                //               "This permission is recommended")));
-                                // }
-                                // if (storage_per ==
-                                //     PermissionStatus.permanentlyDenied) {
-                                //   // openAppSettings();
-                                //   openAppSettings();
-                                // }
-                              },
-                              child: ListTile(
-                                leading: Icon(
-                                  Icons.import_export,
-                                  color: Color.fromARGB(148, 255, 255, 255),
-                                ),
-                                title: Text(
-                                  "Extract to xlsx",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                              value: "Export",
+                            title: Text(
+                              "Trash",
+                              style: TextStyle(color: Colors.white),
                             ),
-                            PopupMenuItem(
-                              onTap: () async {
-                                Get.defaultDialog(
-                                  title: "Extract To Pdf ",
-                                  content: Container(
-                                      height: 50,
-                                      width: 200,
-                                      child: TextFormField(
-                                        controller: pdf_file_con,
-                                        decoration: InputDecoration(
-                                            enabledBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                borderSide: BorderSide(
-                                                    color: Color.fromARGB(
-                                                        255, 0, 150, 250))),
-                                            disabledBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                borderSide: BorderSide(
-                                                    color: Color.fromARGB(
-                                                        255, 0, 150, 250))),
-                                            errorBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                borderSide: BorderSide(
-                                                    color:
-                                                        Color.fromARGB(255, 250, 0, 0))),
-                                            hintText: "enter file name to save",
-                                            focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Color.fromARGB(255, 0, 150, 250)))),
-                                      )),
-                                  cancel: InkWell(
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Container(
-                                      height: 50,
-                                      width: 100,
-                                      child: Center(child: Text("Cancel")),
-                                    ),
-                                  ),
-                                  confirm: InkWell(
-                                    onTap: () async {
-                                      print("valid");
-                                      var obj = Export_To_PDf();
-                                      PermissionStatus storage_per =
-                                          await Permission.storage.request();
-                                      if (storage_per ==
-                                          PermissionStatus.granted) {
-                                        obj.export_to_pdf(
-                                            Lables,
-                                            widget.Form_name,
-                                            values,
-                                            pdf_file_con.text);
+                          ),
+                          value: "Trash",
+                          onTap: () {
+                            delete = true;
+                            Filter = false;
+                            setState(() {});
+                          }),
+                      PopupMenuItem(
+                        onTap: () {
+                          Filter = true;
+                          delete = false;
+                          Date_Fild.clear();
+                          Date_Fild.add("Submit Date");
+                          Value_Fild.clear();
 
-                                        // Get.snackbar(
-                                        //     "Error", "Samthing went wrong");
-                                      }
-                                      if (storage_per ==
-                                          PermissionStatus.denied) {
-                                        await Permission.storage.request();
-                                        // openAppSettings();
-                                        ScaffoldMessenger.of(context)
-                                          ..removeCurrentSnackBar()
-                                          ..showSnackBar(SnackBar(
-                                              content: Text(
-                                                  "This permission is recommended")));
-                                      }
-                                      if (storage_per ==
-                                          PermissionStatus.permanentlyDenied) {
-                                        // openAppSettings();
-                                        openAppSettings();
-                                      }
-                                      pdf_file_con.clear();
-                                      Navigator.pop(context);
-                                    },
-                                    child: Container(
-                                      width: 100,
-                                      height: 50,
-                                      child: Center(child: Text("Extract")),
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: ListTile(
-                                leading: Icon(
-                                  Icons.import_export,
-                                  color: Color.fromARGB(148, 255, 255, 255),
-                                ),
-                                title: Text(
-                                  "Extract To Pdf",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                              value: "Pdf",
-                            ),
-                          ];
+                          for (var i = 0; i < Date_Fild_ind.length; i++) {
+                            Date_Fild.add(Lables[Date_Fild_ind[i]]);
+                          }
+                          for (var i = 0; i < Value_Fild_ind.length; i++) {
+                            Value_Fild.add(Lables[Value_Fild_ind[i]]);
+                          }
+                          value.Update_Selected_Value_Date(Date_Fild[0]);
+
+                          print(Date_Fild);
+                          print("----------------------------++++++");
+                          print(Value_Fild);
+                          setState(() {});
                         },
-                      );
-                    },
-                  )
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.tune,
+                            color: Color.fromARGB(148, 255, 255, 255),
+                          ),
+                          title: Text(
+                            "Filter",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        value: "Filter",
+                      ),
+                      PopupMenuItem(
+                        onTap: () async {
+                          Get.defaultDialog(
+                            title: "Extract To Excel ",
+                            // actions: [
+                            //   Radio(
+
+                            //     value: "excel",
+                            //     groupValue: "formet",
+                            //     onChanged: (value) {
+                            //       extract_formet = value;
+                            //     },
+                            //   ),
+                            //   Radio(
+                            //     value: "pdf",
+                            //     groupValue: "formet",
+                            //     onChanged: (value) {
+                            //       extract_formet = value;
+                            //     },
+                            //   )
+                            // ],
+                            content: Container(
+                                height: 50,
+                                width: 200,
+                                child: TextFormField(
+                                  controller: file_con,
+                                  decoration: InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 0, 150, 250))),
+                                      disabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 0, 150, 250))),
+                                      errorBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 250, 0, 0))),
+                                      hintText: "enter file name to save",
+                                      focusedBorder:
+                                          OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Color.fromARGB(255, 0, 150, 250)))),
+                                )),
+                            cancel: InkWell(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Container(
+                                height: 50,
+                                width: 100,
+                                child: Center(child: Text("Cancel")),
+                              ),
+                            ),
+                            confirm: InkWell(
+                              onTap: () async {
+                                print("valid");
+                                Export_To_Excel obj = Export_To_Excel();
+                                PermissionStatus storage_per =
+                                    await Permission.storage.request();
+                                if (storage_per == PermissionStatus.granted) {
+                                  if (search_control.text.isEmpty ||
+                                      search == false) {
+                                    obj.export_to_Excel(
+                                        file_con.text, values, Lables);
+                                  } else if (search_control.text.isNotEmpty ||
+                                      search == true) {
+                                    obj.export_to_Excel(
+                                        file_con.text, search_values, Lables);
+                                  }
+                                  // search
+                                  //     ? obj.export_to_Excel(
+                                  //         file_con.text, search_values, Lables)
+                                  //     : obj.export_to_Excel(
+                                  //         file_con.text, values, Lables);
+
+                                  // Get.snackbar(
+                                  //     "Error", "Samthing went wrong");
+                                }
+                                if (storage_per == PermissionStatus.denied) {
+                                  await Permission.storage.request();
+                                  // openAppSettings();
+                                  ScaffoldMessenger.of(context)
+                                    ..removeCurrentSnackBar()
+                                    ..showSnackBar(SnackBar(
+                                        content: Text(
+                                            "This permission is recommended")));
+                                }
+                                if (storage_per ==
+                                    PermissionStatus.permanentlyDenied) {
+                                  // openAppSettings();
+                                  openAppSettings();
+                                }
+                                file_con.clear();
+                                Navigator.pop(context);
+                              },
+                              child: Container(
+                                width: 100,
+                                height: 50,
+                                child: Center(child: Text("Extract")),
+                              ),
+                            ),
+                          );
+                          // Export_To_Excel obj = Export_To_Excel();
+                          // PermissionStatus storage_per =
+                          //     await Permission.storage.request();
+                          // if (storage_per == PermissionStatus.granted) {
+
+                          //     obj.export_to_Excel(
+                          //         "my excel file", values, Lables);
+
+                          //     // Get.snackbar(
+                          //     //     "Error", "Samthing went wrong");
+
+                          // }
+                          // if (storage_per == PermissionStatus.denied) {
+                          //   await Permission.storage.request();
+                          //   // openAppSettings();
+                          //   ScaffoldMessenger.of(context).showSnackBar(
+                          //       SnackBar(
+                          //           content: Text(
+                          //               "This permission is recommended")));
+                          // }
+                          // if (storage_per ==
+                          //     PermissionStatus.permanentlyDenied) {
+                          //   // openAppSettings();
+                          //   openAppSettings();
+                          // }
+                        },
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.import_export,
+                            color: Color.fromARGB(148, 255, 255, 255),
+                          ),
+                          title: Text(
+                            "Extract to xlsx",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        value: "Export",
+                      ),
+                      PopupMenuItem(
+                        onTap: () async {
+                          Get.defaultDialog(
+                            title: "Extract To Pdf ",
+                            content: Container(
+                                height: 50,
+                                width: 200,
+                                child: TextFormField(
+                                  controller: pdf_file_con,
+                                  decoration: InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 0, 150, 250))),
+                                      disabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 0, 150, 250))),
+                                      errorBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 250, 0, 0))),
+                                      hintText: "enter file name to save",
+                                      focusedBorder:
+                                          OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Color.fromARGB(255, 0, 150, 250)))),
+                                )),
+                            cancel: InkWell(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Container(
+                                height: 50,
+                                width: 100,
+                                child: Center(child: Text("Cancel")),
+                              ),
+                            ),
+                            confirm: InkWell(
+                              onTap: () async {
+                                print("valid");
+                                var obj = Export_To_PDf();
+                                PermissionStatus storage_per =
+                                    await Permission.storage.request();
+                                if (storage_per == PermissionStatus.granted) {
+                                  if (search_control.text.isEmpty ||
+                                      search == false) {
+                                    obj.export_to_pdf(Lables, widget.Form_name,
+                                        values, pdf_file_con.text);
+                                  } else if (search_control.text.isNotEmpty ||
+                                      search == true) {
+                                    obj.export_to_pdf(Lables, widget.Form_name,
+                                        search_values, pdf_file_con.text);
+                                  }
+                                }
+                                if (storage_per == PermissionStatus.denied) {
+                                  await Permission.storage.request();
+                                  // openAppSettings();
+                                  ScaffoldMessenger.of(context)
+                                    ..removeCurrentSnackBar()
+                                    ..showSnackBar(SnackBar(
+                                        content: Text(
+                                            "This permission is recommended")));
+                                }
+                                if (storage_per ==
+                                    PermissionStatus.permanentlyDenied) {
+                                  // openAppSettings();
+                                  openAppSettings();
+                                }
+                                pdf_file_con.clear();
+                                Navigator.pop(context);
+                              },
+                              child: Container(
+                                width: 100,
+                                height: 50,
+                                child: Center(child: Text("Extract")),
+                              ),
+                            ),
+                          );
+                        },
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.import_export,
+                            color: Color.fromARGB(148, 255, 255, 255),
+                          ),
+                          title: Text(
+                            "Extract To Pdf",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        value: "Pdf",
+                      ),
+                    ];
+                  },
+                );
+              },
+            )
           ],
         ),
         floatingActionButton: delete
@@ -2078,32 +2088,12 @@ class _Data_showState extends State<Data_show> {
                           temp.add(snapshot.data!.docs[i].id);
                           values.add(temp);
                           INDEX.add(i);
-                          // print(snapshot.data!.docs.length);
-                          // print("L============ ${length_of_entries}");
-                          // print("Length============ ${temp.length}");
                         }
-                        // "Oldest", "Latest", "Ascending", "Descending"
+
                         if (value.Sort_By_Selection == "Latest") {
                           values = values.reversed.toList();
-                          // Doc_Ids = Doc_Ids.reversed.toList();
                         }
-                        // else if (value.Sort_By_Selection == "Ascending") {
-                        //   // print("Ass=${values..sort(
-                        //   //     (a, b) => a[0].compareTo(b[0]),
-                        //   //   )}");
-                        //   values = values..sort((a, b) => a[0].compareTo(b[0]));
-                        // } else if (value.Sort_By_Selection == "Descending") {
-                        //   values = values..sort((a, b) => b[0].compareTo(a[0]));
-                        //   print("Dss= ");
-                        // }
 
-                        // if (Short_By_Select == "New") {
-                        //   print("Reverse-----------");
-                        //   values.reversed;
-                        //   print(values);
-                        // } else if (Short_By_Select == "") {}
-                        // print("1111111111111111111");
-                        // print(values);
                         print("Values ****** ${values}");
                         my_columns.clear();
                         // my_row.clear();
